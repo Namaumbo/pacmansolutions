@@ -75,11 +75,30 @@ def tinyMazeSearch(problem):
 
 
 def depthFirstSearch(problem):
-    """
+    # we are using Stack, the search explores from the last explored node
+    frontier = util.Stack()
+    # Make an empty list of explored nodes
+    exploredNode = []
+    # Make an empty list of actions
+    actionList = []
+    # Place the starting point in the stack
+    node = {'state': problem.getStartState(), 'cost': actionList}
+    frontier.push(node.values())
+    while frontier:
+        node, activities = frontier.pop()
+        if not node in exploredNode:
+            exploredNode.append(node)
+            if problem.isGoalState(node):
+                return activities
+            successors = problem.getSuccessors(node)
+            for successor in successors:
+                coordinate, path, cost = successor
+                nextActions = activities + [path]
+                frontier.push((coordinate, nextActions))
+    return []
 
 
-    """
-    "*** YOUR CODE HERE ***"
+
 
 def breadthFirstSearch(problem):
     frontier = util.Queue()
