@@ -124,7 +124,7 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
         """Search the node that has the lowest combined cost and heuristic first."""
-        "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***"
         # Use a priority queue, so the cost of actions is calculated with a provided heuristic
         frontier = util.PriorityQueue()
         # Make an empty list of explored nodes
