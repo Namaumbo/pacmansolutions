@@ -112,8 +112,29 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
-    
-    util.raiseNotDefined()
+    # Use a PriorityQueue, so the cost of actions is calculated with a provided heuristic
+    frontier = util.PriorityQueue()
+    # Make an empty list of explored nodes
+    visited = []
+    # Make an empty list of actions
+    actionList = []
+    # Place the starting point in the priority queue
+    node = {'state': problem.getStartState(), 'cost': actionList}
+    frontier.push((node.values()), problem)
+    while frontier:
+        node, actions = frontier.pop()
+        if not node in visited:
+            visited.append(node)
+            if problem.isGoalState(node):
+                return actions
+            successors = problem.getSuccessors(node)
+            for successor in successors:
+                coordinate, direction, cost = successor
+                nextActions = actions + [direction]
+                nextCost = problem.getCostOfActions(nextActions)
+                frontier.push((coordinate, nextActions), nextCost)
+    return []
+
 
 def nullHeuristic(state, problem=None):
     """
@@ -123,28 +144,28 @@ def nullHeuristic(state, problem=None):
     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
-        """Search the node that has the lowest combined cost and heuristic first."""
+    """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-        # Use a priority queue, so the cost of actions is calculated with a provided heuristic
-        frontier = util.PriorityQueue()
-        # Make an empty list of explored nodes
-        exporedNodes = []
-        # Make an empty list of actions
-        actionList = []
-        # Place the starting point in the priority queue
-        frontier.push((problem.getStartState(), actionList), heuristic(problem.getStartState(), problem))
-        while frontier:
-            node, activities = frontier.pop()
-            if not node in exporedNodes:
-                exporedNodes.append(node)
-                if problem.isGoalState(node):
-                    return activities
-                for successor in problem.getSuccessors(node):
-                    position, routes, cost = successor
-                    nextActions = activities + [routes]
-                    nextCost = problem.getCostOfActions(nextActions) + heuristic(position, problem)
-                    frontier.push((position, nextActions), nextCost)
-        return []
+    # Use a priority queue, so the cost of actions is calculated with a provided heuristic
+    frontier = util.PriorityQueue()
+    # Make an empty list of explored nodes
+    exporedNodes = []
+    # Make an empty list of actions
+    actionList = []
+    # Place the starting point in the priority queue
+    frontier.push((problem.getStartState(), actionList), heuristic(problem.getStartState(), problem))
+    while frontier:
+        node, activities = frontier.pop()
+        if not node in exporedNodes:
+            exporedNodes.append(node)
+            if problem.isGoalState(node):
+                return activities
+            for successor in problem.getSuccessors(node):
+                position, routes, cost = successor
+                nextActions = activities + [routes]
+                nextCost = problem.getCostOfActions(nextActions) + heuristic(position, problem)
+                frontier.push((position, nextActions), nextCost)
+    return []
 
 
 
