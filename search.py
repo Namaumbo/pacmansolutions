@@ -111,7 +111,6 @@ def breadthFirstSearch(problem):
 
 
 def uniformCostSearch(problem):
-    "*** YOUR CODE HERE ***"
     # Use a PriorityQueue, so the cost of actions is calculated with a provided heuristic
     frontier = util.PriorityQueue()
     # Make an empty list of explored nodes
