@@ -98,8 +98,6 @@ def depthFirstSearch(problem):
     return []
 
 
-
-
 def breadthFirstSearch(problem):
     frontier = util.Queue()
     # # Make an empty list of actions costed
