@@ -102,32 +102,42 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     frontier = util.Queue()
-    # Make an empty list of actions costed
-    actionCost = []
-    # Position the starting point in the queue
-    node = {'state': problem.getStartState(), 'cost': actionCost}
-    if problem.isGoalState(node['state']):
-        return []
+    # # Make an empty list of actions costed
+    explorednodes = []  # keep track of visited nodes
 
-    frontier.push(node.values())
-    # Make an empty list of explored nodes
-    explored = set()
-    while frontier:
-        node, actions = frontier.pop()
-        # adding nodes to visited list
-        if not node in explored:
-            explored.add(node)
-            if problem.isGoalState(node):
+    startState = problem.getStartState()  # get the start state
+    startNode = (startState, [], 0)  # start node
+
+    frontier.push(startNode)  # push start node onto a queue
+
+    while not frontier.isEmpty():
+        # explore first pushed node
+
+        currentState, actions, currentCost = frontier.pop()
+
+        if currentState not in explorednodes:
+
+            explorednodes.append(currentState)
+
+            if problem.isGoalState(currentState):
                 return actions
+            else:
+                # getting successors of the current state
+                successors = problem.getSuccessors(currentState)
 
-            successors = problem.getSuccessors(node)
-            for successor in successors:
-                position, route, cost = successor
+                for succState, succAction, succCost in successors:
+                    newAction = actions + [succAction]
+                    newCost = currentCost + succCost
+                    newNode = (succState, newAction, newCost)
+                    #
+                    #         for successor in successors:
+                    #             position, route, cost = successor
+                    #             nextMove = actions + [route]
+                    #             frontier.push((position, nextMove))
 
-                nextMove = actions + [route]
-                frontier.push((position, nextMove))
-    return []
+                    frontier.push(newNode)
 
+    return actions
 
 def uniformCostSearch(problem):
     # Use a PriorityQueue, so the cost of actions is calculated with a provided heuristic
