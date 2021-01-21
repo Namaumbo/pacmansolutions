@@ -123,16 +123,10 @@ def breadthFirstSearch(problem):
                 # getting successors of the current state
                 successors = problem.getSuccessors(currentState)
 
-                for succState, succAction, succCost in successors:
+                for succState, succAction, succCosts in successors:
                     newAction = actions + [succAction]
-                    newCost = currentCost + succCost
+                    newCost = currentCost + succCosts
                     newNode = (succState, newAction, newCost)
-                    #
-                    #         for successor in successors:
-                    #             position, route, cost = successor
-                    #             nextMove = actions + [route]
-                    #             frontier.push((position, nextMove))
-
                     frontier.push(newNode)
 
     return actions
